@@ -1,0 +1,4 @@
+get_task:
+    path: /task/{id}
+    controller: App\Task\Controller\TaskController::getTask
+    methods: GET

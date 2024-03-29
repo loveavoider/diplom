@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  php-fpm:
+    container_name: my-php-fpm
+    build:
+      context: ./../
+      dockerfile: ./docker/php-fpm/Dockerfile
+      args:
+        - PUID=${PUID}
+        - PGID=${PGID}
+    volumes:
+      - /var/www/vendor/
+      - ./../:/var/www/
+    ports:
+      - ${NGINX_HOST_HTTP_PORT}:8080
