@@ -1,4 +1,43 @@
 get_task:
-    path: /task/{id}
+    path: /api/task/{id}
     controller: App\Task\Controller\TaskController::getTask
+    methods: GET
+
+create_task:
+    path: /api/task
+    controller: App\Task\Controller\TaskController::createTask
+    methods: POST
+
+update_task:
+    path: /api/task/{id}
+    controller: App\Task\Controller\TaskController::updateTask
+    methods: PATCH
+
+delete_task:
+    path: /api/task/{id}
+    controller: App\Task\Controller\TaskController::deleteTask
+    methods: DELETE
+
+api_login_check:
+    path: /api/auth/token/login
+    methods: POST, OPTIONS
+
+gesdinet_jwt_refresh_token:
+    path: /api/auth/token/refresh
+    controller: gesdinet.jwtrefreshtoken::refresh
+    methods: POST
+
+log_up:
+    path: /user
+    controller: App\User\Controller\UserController::logUp
+    methods: POST
+
+get_me:
+    path: /api/user/me
+    controller: App\User\Controller\UserController::getMe
+    methods: GET
+
+get_list:
+    path: /api/task/list
+    controller: App\Task\Controller\TaskController::getList
     methods: GET

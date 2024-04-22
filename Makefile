@@ -12,7 +12,10 @@ up:
 	${DOCKER_COMPOSE} up -d --remove-orphans
 
 down:
-	${DOCKER_COMPOSE} down
+	${DOCKER_COMPOSE} down --remove-orphans
+
+ps:
+	${DOCKER_COMPOSE} ps
 
 ##################
 # App
@@ -20,3 +23,12 @@ down:
 
 app_bash:
 	${DOCKER_COMPOSE} exec -u www-data php-fpm bash
+
+doc_validate:
+	php bin/console doctrine\:schema\:validate
+
+mig_diff:
+	php bin/console doctrine:migrations:diff
+
+migrate:
+	php bin/console doctrine:migrations:migrate
