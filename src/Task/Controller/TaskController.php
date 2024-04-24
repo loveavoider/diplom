@@ -2,7 +2,6 @@
 
 namespace App\Task\Controller;
 
-
 use App\Task\dto\CreateTaskDto;
 use App\Task\dto\UpdateTask;
 use App\Task\Entity\Task;
@@ -55,11 +54,7 @@ class TaskController extends AbstractController
     public function getList(): Response {
         $user = $this->security->getUser();
         $data = $this->repo->getList($user->getId());
-
+        var_dump($data);
         return new Response($this->serializer->serializeResponse($data));
-    }
-
-    public function draw(): Response {
-        return $this->render('@build/index.html');
     }
 }

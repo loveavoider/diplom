@@ -55,7 +55,7 @@ class TaskRepository
         return $this->entityManager->getRepository(Task::class)->find($id);
     }
 
-    public function getList($userId): array {
-        return $this->entityManager->getRepository(Task::class)->findBy(['owner' => $userId]);
+    public function getList(int $userId): array {
+        return $this->entityManager->getRepository(Task::class)->findBy(['owner' => intval($userId)]);
     }
 }

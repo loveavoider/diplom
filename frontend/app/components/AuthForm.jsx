@@ -2,61 +2,57 @@
 import {Editable, EditablePreview, EditableInput, Button, Stack, FormControl, FormHelperText, FormErrorMessage} from "@chakra-ui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import axios from "axios";
-import { API } from "@/app/constants";
+import { sendRequest } from "@/app/util/axios";
+import { useState } from "react";
+import { useRedirect } from "@/app/util/redirect";
 
-function logIn(login, password) {
-    axios.post(`${API}/api/auth/token/login`, {
-        login: login,
-        password: password
-    })
-        .then((res) => {
-            console.log(res)
-        });
+async function logIn(login, password) {
+    const data = {username: login, password: password}
+    const res = await sendRequest('post', data, 'auth/token/login');
+    localStorage.setItem('jwt', res.data.token);
+    localStorage.setItem('refresh', res.data.refresh_token);
+
+    await useRedirect('/');
 }
 
-function logUp(login, password) {
-    axios.post(`${API}/login`, {
-        login: login,
-        password: password
-    })
-        .then((res) => {
-            console.log(res)
-        });
+async function logUp(login, password) {
+    const data = {login: login, password: password, inn: "1231"}
+
+    await sendRequest('post', data, 'auth/logUp');
+
+    await useRedirect('/');
 }
 
-function AuthAction(isLogUp, credentials) {
+function AuthAction(isLogUp, login, password) {
+    let credentials = {
+        login: login,
+        password: password
+    };
+
     isLogUp ? logUp(credentials.login, credentials.password) : logIn(credentials.login, credentials.password);
 }
 
 export default function AuthForm() {
-    let inps = document.getElementsByTagName("input");
-    let credentials = {
-        login: '',
-        password: ''
-    };
 
-    for (let i = 0; i < inps.length; i++) {
-        const key = inps[i].getAttribute("placeholder");
-        credentials[key] = inps[i].value;
-    }
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
 
     const isLogUp = usePathname() !== '/login';
 
     return (
         <FormControl w="30%" minH="100%" position="absolute" top="30%">
-            <Editable placeholder='login' border="1px" borderColor="gray.300" borderRadius="10px" p="2px">
+            <Editable onChange={(e) => setLogin(e)} placeholder='login' border="1px" borderColor="gray.300" borderRadius="10px" p="2px">
                 <EditablePreview w="100%" />
                 <EditableInput  w="100%" />
             </Editable>
 
-            <Editable mt="40px" placeholder='password' border="1px" borderColor="gray.300" borderRadius="10px" p="2px">
+            <Editable onChange={(e) => setPassword(e)} mt="40px" placeholder='password' border="1px" borderColor="gray.300" borderRadius="10px" p="2px">
                 <EditablePreview w="100%" />
                 <EditableInput  w="100%" />
             </Editable>
 
             <Stack mt="20px" direction="row" justifyContent="center">
-                <Button colorScheme="pink" onClick={() => AuthAction(isLogUp, credentials)}>
+                <Button colorScheme="pink" onClick={() => AuthAction(isLogUp, login, password)}>
                     {isLogUp ? 'Зарегистрироваться' : 'Войти'}
                 </Button>
                 <Link href={"/"}>

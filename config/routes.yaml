@@ -20,7 +20,7 @@ delete_task:
 
 api_login_check:
     path: /api/auth/token/login
-    methods: POST, OPTIONS
+    methods: POST
 
 gesdinet_jwt_refresh_token:
     path: /api/auth/token/refresh
@@ -28,7 +28,7 @@ gesdinet_jwt_refresh_token:
     methods: POST
 
 log_up:
-    path: /user
+    path: /api/auth/logUp
     controller: App\User\Controller\UserController::logUp
     methods: POST
 
@@ -38,6 +38,6 @@ get_me:
     methods: GET
 
 get_list:
-    path: /api/task/list
+    path: /api/tasks
     controller: App\Task\Controller\TaskController::getList
     methods: GET

@@ -48,12 +48,4 @@ class UserController extends AbstractController
 
         return new Response($this->serializer->serializeResponse(['id' => $id]), 201);
     }
-
-//    public function updateTask(Request $request, int $id): Response {
-//        $dto = $this->serializer->derializeRequest(UpdateTask::class, $request);
-//
-//        $this->repo->update($dto, $id);
-//
-//        return new Response();
-//    }
 }

@@ -25,5 +25,5 @@ security:
         - { path: ^/api/auth/token/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/auth/token/refresh, roles: PUBLIC_ACCESS }
         - { path: ^/api/user/me, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/task/list, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/tasks, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/task, roles: IS_AUTHENTICATED_FULLY }
