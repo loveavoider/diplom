@@ -41,3 +41,13 @@ get_list:
     path: /api/tasks
     controller: App\Task\Controller\TaskController::getList
     methods: GET
+
+get_juridical_data:
+    path: /api/companyData/{inn}
+    controller: App\Integration\Controller\IntegrationController::getJuridicalData
+    methods: GET
+
+get_auc_data:
+    path: /api/aucData/{number}
+    controller: App\Integration\Controller\IntegrationController::getAuctionData
+    methods: GET

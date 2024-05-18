@@ -2,15 +2,15 @@
 import {Editable, EditablePreview, EditableInput, Button, Stack, FormControl, FormHelperText, FormErrorMessage} from "@chakra-ui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { sendRequest } from "@/app/util/axios";
+import { sendPost } from "@/app/util/axios";
 import { useState } from "react";
 import { useRedirect } from "@/app/util/redirect";
+import { setTokens } from "@/app/util/auth";
 
 async function logIn(login, password) {
     const data = {username: login, password: password}
-    const res = await sendRequest('post', data, 'auth/token/login');
-    localStorage.setItem('jwt', res.data.token);
-    localStorage.setItem('refresh', res.data.refresh_token);
+    const res = await sendPost(data, 'auth/token/login');
+    setTokens(res.data.token, res.data.refresh_token)
 
     await useRedirect('/');
 }
@@ -18,7 +18,7 @@ async function logIn(login, password) {
 async function logUp(login, password) {
     const data = {login: login, password: password, inn: "1231"}
 
-    await sendRequest('post', data, 'auth/logUp');
+    await sendPost(data, 'auth/logUp');
 
     await useRedirect('/');
 }

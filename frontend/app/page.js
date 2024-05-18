@@ -1,7 +1,8 @@
 'use client';
-import { Button, Stack, Box } from '@chakra-ui/react'
+import { Button, Stack, Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import Link from "next/link";
 import TaskList from "@/app/components/TaskList";
+import {Lk} from "@/app/wigets/Lk";
 
 function Index() {
     return (
@@ -17,6 +18,8 @@ function Index() {
     )
 }
 
+
+
 export default function Home() {
     // border="2px" borderColor="red.500"
     const jwt = localStorage.getItem('jwt');
@@ -25,7 +28,7 @@ export default function Home() {
 
     return (
         <Box p="40px">
-            {isAuth ? <TaskList /> : <Index/>}
+            {isAuth ? <Lk /> : <Index/>}
         </Box>
     );
 }

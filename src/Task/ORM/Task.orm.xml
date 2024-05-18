@@ -10,6 +10,18 @@
         <field name="title" type="string"/>
         <field name="status" type="boolean"/>
         <field name="owner" type="integer" />
+        <field name="tab" type="integer" nullable="true">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>
+        <field name="inn" type="string" nullable="true" />
+        <field name="auc" type="string" nullable="true" />
+        <field name="has_prepaid" type="boolean" nullable="true" />
+        <field name="multi_lot" type="boolean" nullable="true" />
+        <field name="sum_bg" type="decimal" nullable="true" />
+        <field name="sum_deal" type="decimal" nullable="true" />
+        <field name="type" type="string" nullable="true" />
     </entity>
 
 </doctrine-mapping>

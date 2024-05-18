@@ -33,7 +33,12 @@ class TaskController extends AbstractController
             $dto->owner = $user->getId();
         }
 
-        $id = $this->repo->add(new Task($dto->title, $dto->owner));
+        $hasPrepaid = $dto->has_prepaid === '1';
+        $multiLot = $dto->multi_lot === '2';
+
+        $id = $this->repo->add(new Task(
+            $dto->title, $dto->owner, $dto->inn, $dto->auc, $hasPrepaid, $multiLot, $dto->sum_bg, $dto->sum_deal, $dto->type
+        ));
 
         return new Response($this->serializer->serializeResponse(['id' => $id]), 201);
     }
@@ -54,7 +59,7 @@ class TaskController extends AbstractController
     public function getList(): Response {
         $user = $this->security->getUser();
         $data = $this->repo->getList($user->getId());
-        var_dump($data);
+
         return new Response($this->serializer->serializeResponse($data));
     }
 }
