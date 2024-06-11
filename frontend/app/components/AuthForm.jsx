@@ -9,10 +9,12 @@ import { setTokens } from "@/app/util/auth";
 
 async function logIn(login, password) {
     const data = {username: login, password: password}
-    const res = await sendPost(data, 'auth/token/login');
-    setTokens(res.data.token, res.data.refresh_token)
-
-    await useRedirect('/');
+    sendPost(data, 'auth/token/login').then(
+        (res) => {
+            setTokens(res.data.token, res.data.refresh_token);
+            useRedirect('/');
+        }
+    );
 }
 
 async function logUp(login, password) {

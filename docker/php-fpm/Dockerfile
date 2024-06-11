@@ -1,8 +1,10 @@
 FROM php:8.2-fpm-alpine
 
 # Install packages
-RUN apk add --no-cache curl git build-base zlib-dev oniguruma-dev autoconf bash
+RUN apk add --no-cache curl git build-base zlib-dev oniguruma-dev autoconf bash libzip-dev
 RUN apk add --update linux-headers
+
+RUN docker-php-ext-install zip
 
 # Xdebug
 # ARG INSTALL_XDEBUG=false

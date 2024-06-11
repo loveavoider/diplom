@@ -6,7 +6,7 @@ import Input from "@/app/components/Input";
 import PurchaseData from "@/app/components/PurchaseData";
 import {getPurchaseData} from "@/app/util/jurData";
 
-export default function Options({ optionsData, formData, setFormData, propPurchase }) {
+export default function Options({ optionsData, formData, setFormData, propPurchase, isCreate }) {
     const [purchase, setPurchase] = useState({});
 
     return (
@@ -71,8 +71,8 @@ export default function Options({ optionsData, formData, setFormData, propPurcha
                     Реестровый номер торгов по 44 ФЗ:
                     <Stack direction="horizontal">
                         <Input def={formData.auc} mt="8px" width="90%"
-                            onChange={(e) => setFormData({...formData, auc: e.target.value})} />
-                        {formData.auc ? '' :
+                            onChange={(e) => setFormData({...formData, auc: e})} />
+                        {!isCreate ? '' :
                             <Button mt="8px" colorScheme="blue"
                                     onClick={() => getPurchaseData(formData.auc, setPurchase)}>
                                 <SearchIcon/>

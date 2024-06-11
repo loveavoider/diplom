@@ -28,6 +28,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/User/ORM'
                 prefix: 'App\User\Entity'
                 alias: User
+            Document:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Document/ORM'
+                prefix: 'App\Document\Entity'
+                alias: Document
         controller_resolver:
             auto_mapping: true
 

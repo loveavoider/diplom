@@ -8,7 +8,7 @@ class Task
     private string $title;
     private bool $status = true;
     private int $owner;
-    private int $tab = 1;
+    private int $tab;
     private string $inn;
     private string $auc;
     private bool $has_prepaid;
@@ -19,7 +19,7 @@ class Task
 
     public function __construct(
         string $title, int $owner, string $inn, string $auc, bool $has_prepaid, bool $multi_lot,
-        string $sum_bg, string $sum_deal, string $type
+        string $sum_bg, string $sum_deal, string $type, $tab = 1
     ) {
         $this->title = $title;
         $this->owner = $owner;
@@ -30,6 +30,7 @@ class Task
         $this->sum_bg = $sum_bg;
         $this->sum_deal = $sum_deal;
         $this->type = $type;
+        $this->tab = $tab;
     }
 
     /**

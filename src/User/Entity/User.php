@@ -7,10 +7,31 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    const ROLE_USER = 1;
+    const ROLE_BANK = 2;
+
     public int $id;
     public string $login;
     public string $password;
     public string $inn;
+    public int $role = self::ROLE_USER;
+
+
+    /**
+     * @return int
+     */
+    public function getRole(): int
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param int $role
+     */
+    public function setRole(int $role): void
+    {
+        $this->role = $role;
+    }
 
     /**
      * @return int
@@ -79,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         return [
-            'ROLE_USER'
+            $this->getRole()
         ];
     }
 

@@ -16,7 +16,8 @@ function prepareTaskData(rawData, id) {
         sum_bg: rawData.sumBg,
         multi_lot: rawData.multiLot ? '2' : '1',
         inn: rawData.inn,
-        id: id
+        id: id,
+        tab: rawData.tab,
     }
 }
 
@@ -24,7 +25,9 @@ export default function Task({ params }) {
 
     const [taskData, setTaskData] = useState({});
     const [jurData, setJurData] = useState({});
+
     const [purchase, setPurchase] = useState({});
+    const [isBank, setIsBank] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -33,13 +36,15 @@ export default function Task({ params }) {
             // console.log(data);
             getClientData(data.inn, setJurData);
             getPurchaseData(data.auc, setPurchase);
+            const res = await sendGet('user/me', true);
+            setIsBank(res.data.role === 2);
         })()
     }, []);
 
-    // console.log(taskData, purchase);
-
     return (
         jurData?.value ?
-        <CreateForm jurData={jurData} defaultFormData={taskData} propPurchase={purchase} isCreate={false} /> : ''
+        <CreateForm id={params.id} jurData={jurData} defaultFormData={taskData}
+                    propPurchase={purchase} isCreate={false} isBank={isBank} />
+            : ''
     );
 }

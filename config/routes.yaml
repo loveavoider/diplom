@@ -51,3 +51,13 @@ get_auc_data:
     path: /api/aucData/{number}
     controller: App\Integration\Controller\IntegrationController::getAuctionData
     methods: GET
+
+get_doc:
+    path: /api/doc/{task}
+    controller: App\Document\Controller\DocumentController::getDoc
+    methods: GET
+
+make_bg:
+    path: /api/makeBg/{id}
+    controller: App\Task\Controller\TaskController::makeBg
+    methods: GET

@@ -1,13 +1,13 @@
 'use client';
 
-import {Box, List, ListIcon, ListItem, Stack} from "@chakra-ui/react";
+import {Box, List, ListIcon, ListItem} from "@chakra-ui/react";
 import { EditIcon } from '@chakra-ui/icons';
 import Task from "@/app/components/Task";
 import Link from "next/link";
 
-export default function TaskList({tasks, filter = 1}) {
+export default function TaskList({tasks, tab = 1}) {
 
-    tasks = tasks.filter(task => task.tab === filter);
+    tasks = tasks.filter(task => task.tab === tab);
 
     return (
         <List spacing={3}>

@@ -4,7 +4,9 @@ namespace App\Task\Repository;
 
 use App\Task\dto\UpdateTask;
 use App\Task\Entity\Task;
+use App\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TaskRepository
 {
@@ -12,23 +14,22 @@ class TaskRepository
         private readonly EntityManagerInterface $entityManager
     ){}
 
-    public function add(Task $task): int
+    public function add(Task $task): Task
     {
         $this->entityManager->persist($task);
 
         $this->entityManager->flush();
 
-        return $task->getId();
+        return $task;
     }
 
-    public function update(UpdateTask $task, $id): void
+    public function update(UpdateTask $task, $id, int $tab): void
     {
         $t = $this->entityManager->getRepository(Task::class)->find($id);
 
         $title = $task->title ?? null;
         $status = $task->status ?? null;
         $owner = $task->owner ?? null;
-        $tab = $task->tab ?? null;
         $inn = $task->inn ?? null;
         $auc = $task->auc ?? null;
         $has_prepaid = $task->has_prepaid ?? null;
@@ -49,9 +50,7 @@ class TaskRepository
             $t->setOwner($owner);
         }
 
-        if ($tab !== null) {
-            $t->setTab($tab);
-        }
+        $t->setTab($tab);
 
         if ($inn !== null) {
             $t->setInn($inn);
@@ -97,7 +96,15 @@ class TaskRepository
         return $this->entityManager->getRepository(Task::class)->find($id);
     }
 
-    public function getList(int $userId): array {
-        return $this->entityManager->getRepository(Task::class)->findBy(['owner' => intval($userId)]);
+    public function getList(UserInterface $user): array {
+        $roles = $user->getRoles();
+
+        if (in_array(User::ROLE_BANK, $roles)) {
+            return $this->entityManager->getRepository(Task::class)->findAll();
+        }
+
+        return $this->entityManager->getRepository(Task::class)->findBy(
+            ['owner' => intval($user->getId())]
+        );
     }
 }
