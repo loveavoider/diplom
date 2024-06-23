@@ -12,14 +12,19 @@ function getOptionsData(jurData) {
     return {value: jurData.value};
 }
 
-async function makePayload(id) {
+async function makePayload(id, setUnResulted) {
     const {status} = await sendGet(`makeBg/${id}`, true);
-    return status === 200;
+    setUnResulted(status !== 200);
 }
 
 async function updateDocs(setDocs, id) {
     const {data} = await sendGet(`doc/${id}`, true);
     setDocs(data);
+}
+
+async function dropApp(id, setUnResulted) {
+    const {status} = await sendGet(`drop/${id}`, true);
+    setUnResulted(status !== 200);
 }
 
 export default function CreateForm({ id, jurData, defaultFormData,
@@ -34,17 +39,25 @@ export default function CreateForm({ id, jurData, defaultFormData,
 
     const [docsData, setDocsData] = useState([]);
 
+    const [unResulted, setUnResulted] = useState(true);
+
     return (
         <Box p="40px" display="flex" justifyContent="center">
             <Box position="absolute" top="40px" right="80px">
                 <Link href={'/'}>
-                    <Button colorScheme="red">На главную</Button>
+                    <Button colorScheme="blue">На главную</Button>
                 </Link>
                 {
-                    isBank && defaultFormData.tab !== 3 ?
-                        <Button ml="10px" colorScheme="green" onClick={() => makePayload(id)}>
-                        Сформировать предложение
-                    </Button> : ''
+                    unResulted && isBank && defaultFormData.tab !== 3 ?
+                        <>
+                            <Button ml="10px" colorScheme="green" onClick={() => makePayload(id, setUnResulted)}>
+                                Сформировать предложение
+                            </Button>
+                            <Button ml="10px" colorScheme="red" onClick={() => dropApp(id, setUnResulted)}>
+                                Отклонить заявку
+                            </Button>
+                        </>
+                        : ''
                 }
             </Box>
             <Tabs variant='enclosed' w="60%" mt="40px">

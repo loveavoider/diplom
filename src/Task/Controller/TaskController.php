@@ -180,6 +180,19 @@ class TaskController extends AbstractController
         return new Response('', 200);
     }
 
+    public function dropApp(int $id): Response {
+        $user = $this->security->getUser();
+
+        if ($user->getRole() !== User::ROLE_BANK) {
+            return new Response('У вас нет доступа', 401);
+        }
+
+        $updateTaskDto = new UpdateTask();
+        $this->repo->update($updateTaskDto, $id, 4);
+
+        return new Response('', 200);
+    }
+
     private function checkAndWriteDoc(int $taskId, string $folder, string $name, int $type) {
         $doc = $this->documentRepository->getByType($taskId, $type);
 

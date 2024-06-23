@@ -61,3 +61,8 @@ make_bg:
     path: /api/makeBg/{id}
     controller: App\Task\Controller\TaskController::makeBg
     methods: GET
+
+drop_app:
+    path: /api/drop/{id}
+    controller: App\Task\Controller\TaskController::dropApp
+    methods: GET

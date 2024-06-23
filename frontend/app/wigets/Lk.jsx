@@ -39,6 +39,7 @@ export function Lk() {
                             <Tab>Черновики</Tab>
                             <Tab>Успешный скоринг</Tab>
                             <Tab>Действующие гарантии</Tab>
+                            <Tab>Отклонённые гарантии</Tab>
                         </TabList>
 
                         <TabPanels>
@@ -50,6 +51,9 @@ export function Lk() {
                             </TabPanel>
                             <TabPanel>
                                 <TaskList tasks={tasks} tab={3} />
+                            </TabPanel>
+                            <TabPanel>
+                                <TaskList tasks={tasks} tab={4} />
                             </TabPanel>
                         </TabPanels>
                     </Tabs>
